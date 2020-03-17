@@ -1,20 +1,131 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Gyro Passenger
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <strong>Status: {{ status }}</strong><br>
+
+    <strong>Time elapsed: {{ elapsed_time }}</strong>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            Neutral x
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            Neutral y
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            Neutral Z
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div>
+            {{ neutral_x.toFixed(4) }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ neutral_y.toFixed(4) }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ neutral_z.toFixed(4) }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <b>Direction</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <b>Current</b>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <b>Delta</b>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div>
+            X
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ x.toFixed(4) }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ (x - neutral_x).toFixed(4) }}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div>
+            Y
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ y.toFixed(4) }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ (y - neutral_y).toFixed(4) }}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div>
+            Z
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ z.toFixed(4) }}
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            {{ (z - neutral_z).toFixed(4) }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <br>
+    <strong>Passengers: {{ passengers }}</strong>
+
   </div>
 </ion-content>
