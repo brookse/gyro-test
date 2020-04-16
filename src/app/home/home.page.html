@@ -1,16 +1,50 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Gyro Passenger
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <strong>Status: {{ status }}</strong><br>
+    <ion-button margin-top shape="round" (click)="toggleWatch()">{{ isPaused ? 'Start Gyro Watch' : 'Pause Gyro Watch' }}</ion-button><br><br>
 
-    <strong>Time elapsed: {{ elapsed_time }}</strong>
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input type="text" placeholder="Name" [(ngModel)]="name" required></ion-input><br>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Car make, model, year</ion-label>
+      <ion-input type="text" placeholder="Car Make, Model, Year" [(ngModel)]="car" required></ion-input>
+    </ion-item>
+
+    <ion-segment scrollable (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="1 driver">
+        <ion-label>1D</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1 front passenger">
+        <ion-label>1FP</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1 back driver">
+        <ion-label>1BD</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1 back passenger">
+        <ion-label>1BP</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="2 front passenger">
+        <ion-label>2FP</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="2 back driver">
+        <ion-label>2BD</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="2 back passenger">
+        <ion-label>2BP</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <p>Starting time: {{ first_timestamp }}<br>Time elapsed: {{ elapsed_time.toFixed(0) }}<br>Status: {{ status }}</p><br><br>
 
     <ion-grid>
       <ion-row>
@@ -82,7 +116,7 @@
         </ion-col>
         <ion-col>
           <div>
-            {{ (x - neutral_x).toFixed(4) }}
+            {{ delta_x }}
           </div>
         </ion-col>
       </ion-row>
@@ -100,7 +134,7 @@
         </ion-col>
         <ion-col>
           <div>
-            {{ (y - neutral_y).toFixed(4) }}
+            {{ delta_y }}
           </div>
         </ion-col>
       </ion-row>
@@ -118,14 +152,46 @@
         </ion-col>
         <ion-col>
           <div>
-            {{ (z - neutral_z).toFixed(4) }}
+            {{ delta_z }}
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <br>
-    <strong>Passengers: {{ passengers }}</strong>
+    <!-- <br> -->
+    <!-- <strong>Passengers: {{ passengers }}</strong><br><br> -->
+
+    <ion-button shape="round" color="success" (click)="sendReport()">Send Report</ion-button><br><br>
+    <ion-button shape="round" size="small" color="light" (click)="resetPosition()">Reset neutral position</ion-button><br><br>
+
+    <strong>Significant Delta Changes</strong><br>
+    <ion-button size="small" fill="outline" (click)="showThree = !showThree">
+      0.3 - {{ delta_count_three }}
+      <ion-icon slot="end" name="arrow-down-circle-outline" *ngIf="!showThree"></ion-icon>
+      <ion-icon slot="end" name="arrow-up-circle-outline" *ngIf="showThree"></ion-icon>
+    </ion-button><br>
+    <p *ngIf="showThree">{{delta_changes_three}}</p><br>
+
+    <ion-button size="small" fill="outline" (click)="showFive = !showFive">
+      0.5 - {{ delta_count_five }}
+      <ion-icon slot="end" name="arrow-down-circle-outline" *ngIf="!showFive"></ion-icon>
+      <ion-icon slot="end" name="arrow-up-circle-outline" *ngIf="showFive"></ion-icon>
+    </ion-button><br>
+    <p *ngIf="showFive">{{delta_changes_five}}</p><br>
+
+    <ion-button size="small" fill="outline" (click)="showSeven = !showSeven">
+      0.7 - {{ delta_count_seven }}
+      <ion-icon slot="end" name="arrow-down-circle-outline" *ngIf="!showSeven"></ion-icon>
+      <ion-icon slot="end" name="arrow-up-circle-outline" *ngIf="showSeven"></ion-icon>
+    </ion-button><br>
+    <p *ngIf="showSeven">{{delta_changes_seven}}</p><br>
+
+    <ion-button size="small" fill="outline" (click)="showOne = !showOne">
+      1.0 - {{ delta_count_one }}
+      <ion-icon slot="end" name="arrow-down-circle-outline" *ngIf="!showOne"></ion-icon>
+      <ion-icon slot="end" name="arrow-up-circle-outline" *ngIf="showOne"></ion-icon>
+    </ion-button><br>
+    <p *ngIf="showOne">{{delta_changes_one}}</p><br>
 
   </div>
 </ion-content>
